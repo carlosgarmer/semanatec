@@ -14,19 +14,22 @@ def aplicador(frag, kernel):
             result += frag[row,col] *  kernel[row][col]
     return result
 
-def con(imagen,kernel):
+def con(imagen,kernel,padd):
     #Primero definir el tamaño de la imagen y del filtro
     imgFil,imgCol = imagen.shape
     kernelFil = len(kernel[0])
     kernelCol = len(kernel)
+    paddf = 0
+    if padd >0 :
+        paddf = padd % 2
 
-    final = np.zeros(imagen.shape)
+    final = np.zeros((imgFil- padd ,imgCol- padd))
 
-    for fila in range(imgFil):
-        for col in range(imgCol):
+    for fila in range(paddf, imgFil-padd):
+        for col in range(paddf, imgCol-padd):
                 final[fila, col] = aplicador(
-                                    imagen[fila:fila + kernelFil, 
-                                    col:col + kernelCol],kernel)
+                                    imagen[fila- paddf:fila -paddf+ kernelFil, 
+                                    col -paddf :col -paddf+ kernelCol],kernel)
     plt.imshow(final, cmap='gray')
     plt.title("Output Image using {}X{} Kernel".format(kernelFil, kernelCol))
     plt.show()
@@ -35,12 +38,14 @@ def main():
     ap = argparse.ArgumentParser()
 
     ap.add_argument("-img", "--foperand", required=True)
+    ap.add_argument("-pad", "--soperand", required=True)
     args = vars(ap.parse_args())
     path = args['foperand']
+    padd = int(args['soperand'])
     print(path)
     img = cv2.imread(path, 0) 
     kernel = [[1,0,1],[1,0,1],[1,0,1]]
-    con(img,kernel)
+    con(img,kernel,padd)
 
     return 0
 
