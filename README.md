@@ -11,10 +11,10 @@ La actividad 2 agrega a la actividad 1 la opción de añadir padding.
 ## Requisitos 
 
 Para correr los scripts  se requiere Python 3 e instalar las dependencias
-###numpy
-###cv2
-###matplotlib.pyplot
-###argparse
+numpy
+cv2
+matplotlib.pyplot
+argparse
 
 
 
